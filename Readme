@@ -1,0 +1,5 @@
+Used npm install oidc-client-ts react-oidc-context --save
+Reference: https://www.npmjs.com/package/react-oidc-context
+
+Please clreate server from backend.
+Here in the demo please provide clientId and redirect url as per backend server.
