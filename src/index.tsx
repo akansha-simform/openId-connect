@@ -1,35 +1,43 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
-import { AuthProvider } from "react-oidc-context";
-import { AUTHORITY, CLIENT_ID, REDIRECT_URI, RESPONSE_TYPE } from "./Constant";
+import GoogleProvider from "./Providers/GoogleProvider";
+import OwnProvider from "./Providers/OwnProvider";
+import GoogleApp from "./GoogleApp";
+const App = React.lazy(() => import("./App"));
+
+// Enable and disable according to output
+// localStorage.setItem("type", "Google");
+localStorage.setItem("type", "OwnServer");
+
+export const openIDConst = {
+  Google: "Google",
+  OwnServer: "OwnServer",
+};
+
+const curTheme =
+  localStorage.getItem("type") === openIDConst.Google
+    ? openIDConst.Google
+    : openIDConst.OwnServer;
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const oidcConfig = {
-  onSigninCallback: (user: any) => {
-    loginUser(user);
-  },
-  authority: AUTHORITY,
-  client_id: CLIENT_ID,
-  response_type: RESPONSE_TYPE,
-  redirect_uri: REDIRECT_URI,
-};
-
-const loginUser = (user: any) => {
-  localStorage.setItem("access_token", user?.access_token);
-};
-
 root.render(
   <React.StrictMode>
-    <AuthProvider {...oidcConfig}>
-      <App />
-    </AuthProvider>
+    {curTheme === openIDConst.Google && (
+      <GoogleProvider>
+        <GoogleApp />
+      </GoogleProvider>
+    )}
+    {curTheme === openIDConst.OwnServer && (
+      <OwnProvider>
+        <App />
+      </OwnProvider>
+    )}
   </React.StrictMode>
 );
 

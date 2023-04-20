@@ -3,3 +3,6 @@ Reference: https://www.npmjs.com/package/react-oidc-context
 
 Please clreate server from backend.
 Here in the demo please provide clientId and redirect url as per backend server.
+
+Note: Please do note use this package https://www.npmjs.com/package/oidc-react,
+beacuse It will create invalidate error of token.
