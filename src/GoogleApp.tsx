@@ -19,7 +19,7 @@ function GoogleApp() {
     picture: "",
   });
 
-  const user1 = useMemo(() => {
+  useMemo(() => {
     if (!credentialResponse?.credential) return;
     setUser(jwtDecode(credentialResponse.credential));
     return jwtDecode(credentialResponse.credential);
